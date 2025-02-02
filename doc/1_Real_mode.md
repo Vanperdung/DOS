@@ -42,3 +42,29 @@ In Real Mode, the x86 architecture uses several segment registers to access diff
 - **FS and GS:** Additional segment registers available in later x86 processors for general-purpose use.
 
 These segment registers allow the CPU to access different areas of memory efficiently and are essential for the segmented memory model used in Real Mode.
+
+## [Interrupt Vector Table](http://wiki.osdev.org/Exceptions)
+
+- In Real Mode, the Interrupt Vector Table (IVT) is loaded at 0x00. IVT is a table that specifies the addresses of interrupt handlers. Each slot takes 4 bytes - the first 2 bytes are the offset, and the second 2 bytes are the segment.
+- IVT has 256 interrupt handlers.
+
+```
+ +-----------+-----------+
+ |  Offset   | Segment   |
+ +-----------+-----------+
+ 0           2           4
+ ```
+
+Here are examples of how interrupt vectors are mapped to their respective addresses in the Interrupt Vector Table (IVT):
+
+- **int 0x00** ~ address 0x00
+- **int 0x01** ~ address 0x04
+- **int 0x02** ~ address 0x08
+
+The values of 0x08-0x11 are 00 01 11 11, which means the address of ISR (int 0x02) is calculated as follows:
+
+```
+Physical address = (0x1111 * 16) + 0x0001 = 0x11110 + 0x0001 = 0x11111
+```
+
+To define a custom interrupt handler, we first define a routine with a label and then write the segment/offset of the routine to IVT.
