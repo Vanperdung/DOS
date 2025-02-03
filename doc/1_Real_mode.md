@@ -42,3 +42,43 @@ In Real Mode, the x86 architecture uses several segment registers to access diff
 - **FS and GS:** Additional segment registers available in later x86 processors for general-purpose use.
 
 These segment registers allow the CPU to access different areas of memory efficiently and are essential for the segmented memory model used in Real Mode.
+
+## [Interrupt Vector Table](http://wiki.osdev.org/Exceptions)
+
+- In Real Mode, the Interrupt Vector Table (IVT) is loaded at 0x00. IVT is a table that specifies the addresses of interrupt handlers. Each slot takes 4 bytes - the first 2 bytes are the offset, and the second 2 bytes are the segment.
+- IVT has 256 interrupt handlers.
+
+```
+ +-----------+-----------+
+ |  Offset   | Segment   |
+ +-----------+-----------+
+ 0           2           4
+ ```
+
+Here are examples of how interrupt vectors are mapped to their respective addresses in the Interrupt Vector Table (IVT):
+
+- **int 0x00** ~ address 0x00
+- **int 0x01** ~ address 0x04
+- **int 0x02** ~ address 0x08
+
+The values of 0x08-0x11 are 00 01 11 11, which means the address of ISR (int 0x02) is calculated as follows:
+
+```
+Physical address = (0x1111 * 16) + 0x0001 = 0x11110 + 0x0001 = 0x11111
+```
+
+To define a custom interrupt handler, we first define a routine with a label and then write the segment/offset of the routine to IVT.f
+
+## Reading From The Disk
+
+The bootloader is appended the content of [boot5.txt](../examples/bootloader/boot5.txt) at the end of binary file (see [Makefile](../examples/bootloader/Makefile)).
+
+When we start up a QEMU with `boot5.bin`, it treats it as a hard disk.
+
+Whenever the CPU reads data from a hard disk, it must be one full sector (512 bytes). We need to make sure that our message (starting from the second sector 0x200 because we use the first sector for our bootloader code), is padded with zeros until the end of the sector.
+
+Disk access is done via [`Int13h/AH=02h`](http://www.ctyme.com/intr/rb-0607.htm).
+
+Note how we created an empty label called `buffer` at the very end of the bootloader code. Because the bootloader code is 512 bytes, this label is not loaded into the memory. That doesn't mean we cannot use the memory pointed by this label. Since the label is at the end, it points to 0x7e00 = 0x7c00 (start of the bootloader) + 0x200 (512 bytes).
+
+![RESULT](./img/1_Real_mode_final.png)
