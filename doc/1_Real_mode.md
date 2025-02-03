@@ -19,6 +19,10 @@ Real mode is primarily used for bootstrapping and running legacy software.
 - Provides no hardware security
 - Therefore, simple user program can destroy the operating system with no way for us to stop them
 
+## Writing a bootloader 
+
+A bootloader is a set of CPU instructions (usually written in assembly) that is loaded by the BIOS when a PC is booted. Bootloader's code sits at 0x7c00 when loaded into the memory, and must be 1 sector (= 512 bytes) long. The end of the bootloader code is marked by a 2-byte signature 0x55AA.
+
 ## [Segmentation Memory Model](https://wiki.osdev.org/Segmentation)
 
 - Memory is accessed by a segment and an offset
