@@ -1,4 +1,8 @@
-### Protected Mode vs Real Mode
+# Protected Mode
+
+Protected mode is an operational mode of x86 processors that provides advanced features like virtual memory, access control, memory protection and much more.
+
+## Protected Mode vs Real Mode
 
 | Feature                      | **Real Mode**                                  | **Protected Mode**                               |
 |------------------------------|----------------------------------------------|------------------------------------------------|
@@ -12,3 +16,28 @@
 | **Interrupt Handling**       | Uses the **Interrupt Vector Table (IVT)**    | Uses the **Interrupt Descriptor Table (IDT)** |
 | **Speed & Efficiency**       | ❌ Slow due to segmentation and limited memory | ✅ Faster due to direct memory access and better memory management |
 | **Modern OS Support**        | ❌ Only useful for legacy code (like bootloaders) | ✅ Required for all modern OSes               |
+
+## Memory Protection
+
+The feature of memory protection is preventing other processes from accessing the memory they don't own, reducing the crashes and security risks.
+
+This feature is achieved using:
+
+### Global Descriptor Table
+
+See [Global Descriptor Table](2_2_Global_descriptor_table.md)
+
+### Paging (CR3 & Page Tables)
+
+See [Address Translation](2_1_Address_translation.md)
+
+## Hardware Protection
+
+Protected mode protects hardware resources using privilege levels (Rings) and special registers.
+
+<img src="./img/2_Protection_ring.png" alt="Protection ring" width="700" height="500">
+
+NEED TO BE COMPLETED
+
+## Entering Protected Mode
+
