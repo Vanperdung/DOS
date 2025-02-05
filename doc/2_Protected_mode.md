@@ -41,3 +41,12 @@ NEED TO BE COMPLETED
 
 ## Entering Protected Mode
 
+NEED TO BE COMPLETED
+
+## Build Own GCC Cross Compiler
+
+To build your own GCC cross compiler, run the script: 
+
+```bash
+./dos/script/bootstrap.sh
+```
