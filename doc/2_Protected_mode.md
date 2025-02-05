@@ -25,22 +25,7 @@ This feature is achieved using:
 
 ### Global Descriptor Table
 
-The Global Descriptor Table (GDT) is a fundamental data structure in x86 arch, particularly in protected mode.
-
-It defines the characteristic of various memory segments during the program execution, including base address, limit (size), access privilege.
-
-The memory segments are the code segment, data segment, task state segment (TSS) or the local descriptor table (LDT).
-
-Important terminologies:
-
-- Segment: A logically contiguous chunk of memory with consistent properties (from the CPU's perspective).
-- Segment Register: A register of your CPU that refers to a segment for a particular purpose (CS, DS, SS, ES) or for general use (FS, GS)
-- Segment Selector: A reference to a descriptor, which you can load into a segment register; the selector is an offset into a descriptor table pointing to one of its entries.
-- Segment Descriptor: An entry in a descriptor table. These are a binary data structure that tells the CPU the attributes of a given segment.
-
-<img src="./img/2_Segment_descriptor.png" alt="Segment descriptor" width="500" height="300">
-
-For more details, see [Global Descriptor Table](https://wiki.osdev.org/Global_Descriptor_Table)
+See [Global Descriptor Table](2_2_Global_descriptor_table.md)
 
 ### Paging (CR3 & Page Tables)
 
@@ -51,3 +36,8 @@ See [Address Translation](2_1_Address_translation.md)
 Protected mode protects hardware resources using privilege levels (Rings) and special registers.
 
 <img src="./img/2_Protection_ring.png" alt="Protection ring" width="700" height="500">
+
+NEED TO BE COMPLETED
+
+## Entering Protected Mode
+

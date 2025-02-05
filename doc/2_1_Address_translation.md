@@ -32,6 +32,8 @@ These addresses are logical (virtual) addresses assigned by the operating system
 
 The translation involves 2 steps.
 
+<img src="./img/2_Segmentation_paging.png" alt="Segmentation and Paging">
+
 ### Segmentation
 
 The logical address is divided into a segment selector and an offset.
