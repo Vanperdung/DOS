@@ -1,2 +1,2 @@
 all:
-	nasm -f bin boot.asm -o boot.bin
+	nasm -f bin boot.asm -o ../build/boot.bin

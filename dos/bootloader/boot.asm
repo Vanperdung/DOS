@@ -30,7 +30,8 @@ second_stage:
     mov eax, cr0
     or eax, 1
     mov cr0, eax ; Enable protected mode
-    jmp CODE_SEG_INDEX:start32 ; Jump to 32-bit code
+    jmp CODE_SEG_INDEX:0x00100000 ; Jump to 32-bit code
+    ; 0x00100000 is the address where the kernel is loaded (defined in dos/kernel/linker.ld)
 
 ; GDT
 gdt_start:
@@ -58,18 +59,6 @@ gdt_end:
 gdt_descriptor:
     dw gdt_end - gdt_start - 1 ; Limit
     dd gdt_start ; Base
-
-[BITS 32] ; Switch to 32-bit code
-start32:
-    mov ax, DATA_SEG_INDEX
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
-    mov ebp, 0x00200000 ; Set stack pointer to 2MB
-    mov esp, ebp    
-    jmp $
 
 times 510-($-$$) db 0 ; Fill the rest of sector with 0
 dw 0xAA55 ; Boot signature
