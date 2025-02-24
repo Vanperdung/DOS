@@ -71,7 +71,7 @@ The values of 0x08-0x11 are 00 01 11 11, which means the address of ISR (int 0x0
 Physical address = (0x1111 * 16) + 0x0001 = 0x11110 + 0x0001 = 0x11111
 ```
 
-To define a custom interrupt handler, we first define a routine with a label and then write the segment/offset of the routine to IVT.f
+To define a custom interrupt handler, we first define a routine with a label and then write the segment/offset of the routine to IVT.
 
 ## Reading From The Disk
 
