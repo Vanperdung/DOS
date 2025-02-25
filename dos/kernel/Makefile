@@ -1,4 +1,4 @@
-FILE = ../build/kernel.asm.o ../build/kernel.o
+FILE = ../build/kernel.asm.o ../build/kernel.o ../build/text.o
 INCLUDE = -I.
 C_FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parammeter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc -std=gnu99
 
@@ -22,3 +22,6 @@ all: ../build/kernel.bin
 
 ../build/kernel.o: kernel.c
 	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c kernel.c -o ../build/kernel.o
+
+../build/text.o: text/text.c
+	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c text/text.c -o ../build/text.o
