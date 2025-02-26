@@ -21,6 +21,11 @@ void clear_screen(void)
     }
 }
 
+void print_str(const char *str)
+{
+    str_to_screen_color(str, 0, 0, WHITE);
+}
+
 void char_to_screen_color(char c, int x, int y, uint8_t color)
 {
     uint16_t *pos = (uint16_t *)VIDEO_MEM_COLOR_ADDR + COOR_TO_VAL(x, y);

@@ -40,4 +40,4 @@ make install-gcc
 make install-target-libgcc
 # Finished building gcc
 
-echo "Bootstrap finished. You can now build the project by running 'make' in the project root directory."
+echo "Bootstrap finished."
