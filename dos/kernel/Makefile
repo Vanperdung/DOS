@@ -1,4 +1,4 @@
-FILE = ../build/kernel.asm.o ../build/kernel.o ../build/text.o
+FILE = ../build/kernel.asm.o ../build/kernel.o ../build/text.o ../build/idt.asm.o ../build/idt.o ../build/vendor_intrs.o ../build/mem_utils.o 
 INCLUDE = -I.
 C_FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parammeter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc -std=gnu99
 
@@ -11,10 +11,6 @@ all: ../build/kernel.bin
 # Linking the Assembly Object Files
 	i686-elf-ld -g -relocatable ${FILE} -o ../build/kernelfull.o 
 # Linking the Kernel Binary
-# -T linker.ld → Specifies the linker script (linker.ld), which tells the linker where to place different sections in memory.
-# -ffreestanding → Indicates that the code doesn’t rely on a standard C runtime (important for OS development).
-# -O0 → No optimization (useful during development for debugging).
-# -nostdlib → Do not use the standard C library (libc), as it's not available in a bare-metal environment.
 	i686-elf-gcc ${C_FLAGS} -T linker.ld -o ../build/kernelfull.bin ../build/kernelfull.o
 
 ../build/kernel.asm.o: kernel.asm
@@ -25,3 +21,16 @@ all: ../build/kernel.bin
 
 ../build/text.o: text/text.c
 	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c text/text.c -o ../build/text.o
+
+../build/idt.asm.o: idt/idt.asm
+	nasm -f elf32 -g idt/idt.asm -o ../build/idt.asm.o
+
+../build/idt.o: idt/idt.c
+	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c idt/idt.c -o ../build/idt.o
+
+../build/vendor_intrs.o: idt/vendor_intrs.c
+	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c idt/vendor_intrs.c -o ../build/vendor_intrs.o
+
+../build/mem_utils.o: utils/mem_utils.c
+	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c utils/mem_utils.c -o ../build/mem_utils.o
+

@@ -34,6 +34,7 @@ enum
 void banner_init(void);
 
 void clear_screen(void);
+void print_str(const char *str);
 
 void char_to_screen_color(char c, int x, int y, uint8_t color);
 void char_to_screen_no_color(char c, int x, int y);
