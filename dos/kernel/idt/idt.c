@@ -2,7 +2,7 @@
 #include <stddef.h>
 
 #include "idt.h"
-#include "vendor_intrs.h"
+#include "vendor_excpts.h"
 #include "dos.h"
 #include "utils/mem_utils.h"
 
@@ -16,25 +16,25 @@ void idt_init(void)
     memset(idt, 0, sizeof(idt));
 
     // Load the IDT descriptor
-    idt_set(0, (uint32_t)vendor_intr_divide_error, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(1, (uint32_t)vendor_intr_debug_exception, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(2, (uint32_t)vendor_intr_nmi, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(3, (uint32_t)vendor_intr_breakpoint, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(4, (uint32_t)vendor_intr_overflow, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(5, (uint32_t)vendor_intr_bound_range_exceeded, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(6, (uint32_t)vendor_intr_invalid_opcode, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(7, (uint32_t)vendor_intr_device_not_available, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(8, (uint32_t)vendor_intr_double_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(9, (uint32_t)vendor_intr_coprocessor_segment_overrun, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(10, (uint32_t)vendor_intr_invalid_tss, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(11, (uint32_t)vendor_intr_segment_not_present, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(12, (uint32_t)vendor_intr_stack_segment_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(13, (uint32_t)vendor_intr_general_protection, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(14, (uint32_t)vendor_intr_page_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(16, (uint32_t)vendor_intr_fpu_floating_point_error, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(17, (uint32_t)vendor_intr_alignment_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(18, (uint32_t)vendor_intr_machine_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
-    idt_set(19, (uint32_t)vendor_intr_simd_floating_point_exception, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(0, (uint32_t)vendor_excpt_divide_error, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(1, (uint32_t)vendor_excpt_debug_exception, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(2, (uint32_t)vendor_excpt_nmi, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(3, (uint32_t)vendor_excpt_breakpoint, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(4, (uint32_t)vendor_excpt_overflow, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(5, (uint32_t)vendor_excpt_bound_range_exceeded, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(6, (uint32_t)vendor_excpt_invalid_opcode, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(7, (uint32_t)vendor_excpt_device_not_available, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(8, (uint32_t)vendor_excpt_double_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(9, (uint32_t)vendor_excpt_coprocessor_segment_overrun, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(10, (uint32_t)vendor_excpt_invalid_tss, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(11, (uint32_t)vendor_excpt_segment_not_present, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(12, (uint32_t)vendor_excpt_stack_segment_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(13, (uint32_t)vendor_excpt_general_protection, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(14, (uint32_t)vendor_excpt_page_fault, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(16, (uint32_t)vendor_excpt_fpu_floating_point_error, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(17, (uint32_t)vendor_excpt_alignment_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(18, (uint32_t)vendor_excpt_machine_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    idt_set(19, (uint32_t)vendor_excpt_simd_floating_point_exception, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
 
     idtr.limit = sizeof(idt) - 1;
     idtr.base = (uint32_t)idt;
