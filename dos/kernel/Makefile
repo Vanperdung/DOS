@@ -1,4 +1,4 @@
-FILE = ../build/kernel.asm.o ../build/kernel.o ../build/text.o ../build/idt.asm.o ../build/idt.o ../build/vendor_intrs.o ../build/mem_utils.o 
+FILE = ../build/kernel.asm.o ../build/kernel.o ../build/text.o ../build/idt.asm.o ../build/idt.o ../build/vendor_excpts.o ../build/mem_utils.o 
 INCLUDE = -I.
 C_FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parammeter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc -std=gnu99
 
@@ -28,9 +28,8 @@ all: ../build/kernel.bin
 ../build/idt.o: idt/idt.c
 	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c idt/idt.c -o ../build/idt.o
 
-../build/vendor_intrs.o: idt/vendor_intrs.c
-	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c idt/vendor_intrs.c -o ../build/vendor_intrs.o
+../build/vendor_excpts.o: idt/vendor_excpts.c
+	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c idt/vendor_excpts.c -o ../build/vendor_excpts.o
 
 ../build/mem_utils.o: utils/mem_utils.c
 	i686-elf-gcc ${INCLUDE} ${C_FLAGS} -std=gnu99 -c utils/mem_utils.c -o ../build/mem_utils.o
-
