@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "text/text.h"
 #include "idt/idt.h"
+#include "io/io.h"
 
 void kernel_main(void)
 {

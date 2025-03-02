@@ -21,6 +21,16 @@ _start:
     or al, 2
     out 0x92, al
 
+    ; Remap the master PIC
+    mov al, 00010001b           ; Set PIC to initialization mode
+    out 0x20, al                ; Send the *command* to master PIC via port 0x20
+    mov al, 0x20                ; IRQ 0 mapped to INT 0x20. Following IRQs (1-7) are also mapped accordingly.
+    out 0x21, al                ; Send the *data* to master PIC via port 0x21
+    mov al, 00000001b           ; Set PIC to x86 mode
+    out 0x21, al                ; We finish the initialization by sending the mode configuration to the *data* port.
+
+    sti ; Enable interrupts
+
     call kernel_main
     
     jmp $

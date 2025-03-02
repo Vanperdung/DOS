@@ -10,10 +10,21 @@ struct idt_desc idt[IDT_SIZE];
 struct idtr_desc idtr;
 
 extern void idt_load(struct idtr_desc *idtr);
+extern void no_isr(void);
+extern void int21h(void);
+
+static void idt_clear_intrs(void)
+{
+    for (int i = 0; i < IDT_SIZE; i++)
+    {
+        idt_set(i, (uint32_t)no_isr, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+    }
+}
 
 void idt_init(void)
 {
     memset(idt, 0, sizeof(idt));
+    idt_clear_intrs();  
 
     // Load the IDT descriptor
     idt_set(0, (uint32_t)vendor_excpt_divide_error, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
@@ -35,6 +46,8 @@ void idt_init(void)
     idt_set(17, (uint32_t)vendor_excpt_alignment_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
     idt_set(18, (uint32_t)vendor_excpt_machine_check, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
     idt_set(19, (uint32_t)vendor_excpt_simd_floating_point_exception, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
+
+    idt_set(0x21, (uint32_t)int21h, GDT_CODE_SEG_ADDR, IDT_TYPE_INTR_R3);
 
     idtr.limit = sizeof(idt) - 1;
     idtr.base = (uint32_t)idt;
