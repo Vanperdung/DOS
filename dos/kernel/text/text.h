@@ -36,8 +36,6 @@ void banner_init(void);
 void clear_screen(void);
 void print_str(const char *str);
 
-void char_to_screen_color(char c, int x, int y, uint8_t color);
-void char_to_screen_no_color(char c, int x, int y);
 void str_to_screen_color(const char *str, int x, int y, uint8_t color);
 void str_to_screen_no_color(const char *str, int x, int y);
 
