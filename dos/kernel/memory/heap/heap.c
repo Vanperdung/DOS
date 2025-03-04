@@ -25,7 +25,7 @@ static struct heap kheap;
 // |-------------------------------| 
 
 
-void heap_memory_init(void)
+void kernel_heap_mem_init(void)
 {
     kheap.start_addr = (void *)KERNEL_HEAP_START_ADDR;
     kheap.table.size = KERNEL_HEAP_SIZE / KERNEL_HEAP_BLOCK_SIZE;
@@ -35,8 +35,8 @@ void heap_memory_init(void)
     {
         kheap.table.entries[i].flag = HEAP_BLOCK_IS_FREE;
         kheap.table.entries[i].reserved = 0;
-        kheap.table.entries[i].is_first = 0;
-        kheap.table.entries[i].has_next = 0;
+        kheap.table.entries[i].is_first = HEAP_BLOCK_IS_NOT_FIRST;
+        kheap.table.entries[i].has_next = HEAP_BLOCK_HAS_NO_NEXT;
     }
 }
 
@@ -70,8 +70,8 @@ void* kmalloc(size_t size)
         }
         else 
         {
-            blk_start_idx = 0;
-            blk_end_idx = 0;
+            blk_start_idx = -1;
+            blk_end_idx = -1;
         }
         i++;
     }
@@ -81,8 +81,8 @@ void* kmalloc(size_t size)
         for (int j = blk_start_idx; j <= blk_end_idx; j++)
         {
             kheap.table.entries[j].flag = HEAP_BLOCK_IS_TAKEN;
-            kheap.table.entries[j].has_next = (j < blk_end_idx) ? HEAP_BLOCK_HAS_NEXT : 0;
-            kheap.table.entries[j].is_first = (j == blk_start_idx) ? HEAP_BLOCK_IS_FIRST : 0;
+            kheap.table.entries[j].has_next = ((j < blk_end_idx) ? HEAP_BLOCK_HAS_NEXT : 0);
+            kheap.table.entries[j].is_first = ((j == blk_start_idx) ? HEAP_BLOCK_IS_FIRST : 0);
         }
 
         return (void *)(kheap.start_addr + blk_start_idx * KERNEL_HEAP_BLOCK_SIZE);
@@ -104,10 +104,10 @@ void kfree(void *ptr)
     for (int i = blk_start_idx; i < kheap.table.size; i++)
     {
         kheap.table.entries[i].flag = HEAP_BLOCK_IS_FREE;
-        kheap.table.entries[i].is_first = 0;
+        kheap.table.entries[i].is_first = HEAP_BLOCK_IS_NOT_FIRST;
         if (kheap.table.entries[i].has_next != HEAP_BLOCK_HAS_NEXT)
         {
-            kheap.table.entries[i].has_next = 0;
+            kheap.table.entries[i].has_next = HEAP_BLOCK_HAS_NO_NEXT;
             size_t size = (i - blk_start_idx + 1) * KERNEL_HEAP_BLOCK_SIZE;
             memset(ptr, 0, size);
             break;

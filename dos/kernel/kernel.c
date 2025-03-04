@@ -11,7 +11,7 @@ void kernel_main(void)
 
     idt_init();
 
-    heap_memory_init();
+    kernel_heap_mem_init();
 
     int *ptr = (int *)kmalloc(10000);
     int *ptr1 = (int *)kmalloc(100);
@@ -19,6 +19,12 @@ void kernel_main(void)
     char *ptr2 = (char *)kmalloc(10);
 
     if (ptr == NULL)
+        print_str("Can't allocate memory for ptr");
+
+    if (ptr1 == NULL)
+        print_str("Can't allocate memory for ptr");
+
+    if (ptr2 == NULL)
         print_str("Can't allocate memory for ptr");
 
     kfree(ptr);

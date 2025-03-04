@@ -4,11 +4,14 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define HEAP_BLOCK_IS_FREE 0x00
-#define HEAP_BLOCK_IS_TAKEN 0x01
+#define HEAP_BLOCK_IS_FREE 0
+#define HEAP_BLOCK_IS_TAKEN 1
 
-#define HEAP_BLOCK_HAS_NEXT 0x80
-#define HEAP_BLOCK_IS_FIRST 0x40
+#define HEAP_BLOCK_HAS_NO_NEXT 0
+#define HEAP_BLOCK_HAS_NEXT 1
+
+#define HEAP_BLOCK_IS_NOT_FIRST 0
+#define HEAP_BLOCK_IS_FIRST 1
 
 
 struct heap_block_entry
@@ -31,7 +34,7 @@ struct heap
     void *start_addr;
 };
 
-void heap_memory_init(void);
+void kernel_heap_mem_init(void);
 void* kmalloc(size_t size);
 void kfree(void *ptr);
 
