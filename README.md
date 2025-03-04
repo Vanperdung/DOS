@@ -10,7 +10,6 @@ The name "Dead OS" is intentional. Unlike commercial operating systems, **DOS** 
 
 ## Features
 
-- Bootloader and kernel development from scratch (DONE)
 - Real mode and protected mode exploration (DONE)
 - Memory management basics (In progress)
 - Filesystem experimentation (In progress)
