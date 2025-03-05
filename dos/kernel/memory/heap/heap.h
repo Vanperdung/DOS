@@ -34,7 +34,7 @@ struct heap
     void *start_addr;
 };
 
-void kernel_heap_mem_init(void);
+void heap_mem_init(void);
 void* kmalloc(size_t size);
 void kfree(void *ptr);
 

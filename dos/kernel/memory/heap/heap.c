@@ -25,7 +25,7 @@ static struct heap kheap;
 // |-------------------------------| 
 
 
-void kernel_heap_mem_init(void)
+void heap_mem_init(void)
 {
     kheap.start_addr = (void *)KERNEL_HEAP_START_ADDR;
     kheap.table.size = KERNEL_HEAP_SIZE / KERNEL_HEAP_BLOCK_SIZE;

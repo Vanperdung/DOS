@@ -11,7 +11,7 @@ void kernel_main(void)
 
     idt_init();
 
-    kernel_heap_mem_init();
+    heap_mem_init();
 
     int *ptr = (int *)kmalloc(10000);
     int *ptr1 = (int *)kmalloc(100);
