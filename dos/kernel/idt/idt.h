@@ -24,5 +24,7 @@ struct idtr_desc
 
 void idt_init(void);
 void idt_set(int index, uint32_t offset, uint16_t selector, uint8_t type_attr);
+void enable_interrupts(void);
+void disable_interrupts(void);
 
 #endif
