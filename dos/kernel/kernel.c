@@ -10,6 +10,7 @@ void kernel_main(void)
     banner_init();
 
     idt_init();
+    enable_interrupts();
 
     heap_mem_init();
 

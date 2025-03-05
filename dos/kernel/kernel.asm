@@ -29,8 +29,6 @@ _start:
     mov al, 00000001b           ; Set PIC to x86 mode
     out 0x21, al                ; We finish the initialization by sending the mode configuration to the *data* port.
 
-    sti ; Enable interrupts
-
     call kernel_main
     
     jmp $
